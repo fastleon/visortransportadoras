@@ -2,17 +2,17 @@
 
     class ConsultaRemisionEntidad {
 
-        private FechasConsultaRemision $fechas;
+        private $fechas;
         private $activity_num;
         private $tracks;
 
         public function __construct(
-            $fechas = new FechasConsultaRemision(),
+            FechasConsultaRemision $fechas = null,
             $activity_num = '',
-            $tracks = array(),
+            $tracks = array()
         )
         {
-            $this->fechas = $fechas;
+            $this->fechas = $fechas ? $fechas : new FechasConsultaRemision();
             $this->activity_num = $activity_num;
             $this->tracks = $tracks;
         }
@@ -20,7 +20,7 @@
         /**
          * Get the value of fechas
          */
-        public function getFechas(): FechasConsultaRemision
+        public function getFechas()
         {
                 return $this->fechas;
         }
@@ -28,10 +28,9 @@
         /**
          * Set the value of fechas
          */
-        public function setFechas(FechasConsultaRemision $fechas): self
+        public function setFechas(FechasConsultaRemision $fechas)
         {
                 $this->fechas = $fechas;
-
                 return $this;
         }
 
@@ -46,10 +45,9 @@
         /**
          * Set the value of activity_num
          */
-        public function setActivityNum($activity_num): self
+        public function setActivityNum($activity_num)
         {
                 $this->activity_num = $activity_num;
-
                 return $this;
         }
 
@@ -64,10 +62,9 @@
         /**
          * Set the value of tracks
          */
-        public function setTracks($tracks): self
+        public function setTracks($tracks)
         {
                 $this->tracks = $tracks;
-
                 return $this;
         }
 
@@ -103,7 +100,7 @@
         /**
          * Set the value of fechaProcesoLogistico
          */
-        public function setFechaProcesoLogistico($fechaProcesoLogistico): self
+        public function setFechaProcesoLogistico($fechaProcesoLogistico)
         {
                 $this->fechaProcesoLogistico = $fechaProcesoLogistico;
 
@@ -121,7 +118,7 @@
         /**
          * Set the value of fechaEntregaTransportadora
          */
-        public function setFechaEntregaTransportadora($fechaEntregaTransportadora): self
+        public function setFechaEntregaTransportadora($fechaEntregaTransportadora)
         {
                 $this->fechaEntregaTransportadora = $fechaEntregaTransportadora;
 
@@ -139,7 +136,7 @@
         /**
          * Set the value of fechaEnTransito
          */
-        public function setFechaEnTransito($fechaEnTransito): self
+        public function setFechaEnTransito($fechaEnTransito)
         {
                 $this->fechaEnTransito = $fechaEnTransito;
 
@@ -157,7 +154,7 @@
         /**
          * Set the value of fechaEnReparto
          */
-        public function setFechaEnReparto($fechaEnReparto): self
+        public function setFechaEnReparto($fechaEnReparto)
         {
                 $this->fechaEnReparto = $fechaEnReparto;
 
@@ -175,7 +172,7 @@
         /**
          * Set the value of fechaEntregado
          */
-        public function setFechaEntregado($fechaEntregado): self
+        public function setFechaEntregado($fechaEntregado)
         {
                 $this->fechaEntregado = $fechaEntregado;
 
@@ -193,7 +190,7 @@
         /**
          * Set the value of fechaEstimadaEntrega
          */
-        public function setFechaEstimadaEntrega($fechaEstimadaEntrega): self
+        public function setFechaEstimadaEntrega($fechaEstimadaEntrega)
         {
                 $this->fechaEstimadaEntrega = $fechaEstimadaEntrega;
 

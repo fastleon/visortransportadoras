@@ -7,16 +7,16 @@
  * creado: Alejandro Leon - Norberto Villegas
  */
 
-  define ('DEBUG_MODE', true); 
+  define ('VE_DEBUG_MODE', true); 
+  define ('VE_TIEMPO_RECARGA', 600); //segundos que guarda la ultima busqueda
 
  /** 
   * Implements hook_init() - Llamado de codigo antes de iniciar
   */
 function visorentregas_init(){
-  //include_once 'visorentregas_taxonomia.inc';
-  //module_load_include('inc', 'entity', 'includes/entity.query');
-    //llamar la data_control
-  //module_load_include('php', 'visorentregas', 'domain/session/data_control');
+  //llamar configuracion
+  module_load_include('php', 'visorentregas', 'config\parametros');
+  $_SESSION['visorentrega']['config'] = getParametros();
   return;
 }
 
@@ -40,7 +40,7 @@ function visorentregas_menu() {
     'title' => 'Buscador de Entregas',
     'description' => 'Buscador Drupal Entregas',
     'page callback' => 'generador_webpage_visor_buscador',
-    'access arguments' => array(),          //('administrador modulo viajes'),
+    'access arguments' => array('access content'),          //('administrador modulo viajes'),
     'type' => MENU_NORMAL_ITEM,
   );
 
@@ -48,7 +48,7 @@ function visorentregas_menu() {
     'title' => 'Estado de Entrega',
     'description' => 'Estado de Entrega - Toxement',
     'page callback' => 'generador_webpage_visor_entrega',
-    'access arguments' => array(),
+    'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
     'page arguments' => array(2),
   );
@@ -68,23 +68,15 @@ function visorentregas_menu() {
  */
 function generador_webpage_visor_buscador() {
 
-  module_load_include('inc', 'visorentregas', 'presentation/buscador_entregas');
-  
-  //Revisar si existe la variable local de viajes
-  /*if (isset($_SESSION['visorentregas_data'])){
-    $nuevo = ($_SESSION['visorentregas_data']['id'] == 'new');
-    if (!$nuevo) {
-      datos_en_blanco();
-    }
-  }*/
 
-  //Render de la pagina donde estan los formularios Iniciales
+  module_load_include('inc', 'visorentregas', 'presentacion/buscador_entregas');
+
   $build = array(
-      'formulario_buscador' => drupal_get_form('buscador_entregas_render_form'),
+      'formulario_buscador' => drupal_get_form('buscador_entregas_form'),
   );
 
   //imprimir errores debug
-  mostrar_errores();
+  ve_mostrar_errores();
 
   return $build;
 }
@@ -95,18 +87,22 @@ function generador_webpage_visor_buscador() {
  */
 function generador_webpage_visor_entrega($entrega = NULL) {
 
-  module_load_include('inc', 'visorentregas', 'presentation/visor_entrega');
+  module_load_include('inc', 'visorentregas', 'presentacion/visor_entrega');
 
   //cargar datos del $viaje_id
   //consultar_viaje_por_id($entrega);
   //TODO hacer funcion que consulte el dato con el API
   
   $build = array(
-    'plantilla_viajes' => drupal_get_form('visor_entrega_render_form'),
+    '#markup' => '<div class="mi-clase-css">opcion seleccionado ' . $entrega . '</div>',
   );
 
+  // $build = array(
+  //   'plantilla_viajes' => drupal_get_form('visor_entrega_render_form'),
+  // );
+
   //imprimir errores debug si esta habilitado
-  mostrar_errores();
+  ve_mostrar_errores();
 
   return $build;
 }
@@ -173,3 +169,28 @@ function visorentregas_permission() {
   );
   return $roles;
 }*/
+
+/**
+ * Funcion para depuracion de datos o errores dentro de las funciones callback (DEBUG)
+ * @param {varios} dato, string o similar para visualizar
+ */
+function ve_add_error($dato, $clave = '') {
+  $errores = variable_get('viajesiron_error',array());
+  if ($clave != '') { $errores[] = "clave: " . $clave; }
+  $errores[] = $dato;
+  variable_set('viajesiron_error', $errores);
+}
+
+
+/**
+ * Funcion para desplegar todos los errores almacenados antes del llamado al callback
+ */
+function ve_mostrar_errores() {
+  if (VE_DEBUG_MODE) {
+    echo "<pre>";
+    print_r(variable_get('viajesiron_error', 'no errores'));
+    echo "</pre>";
+    variable_del('viajesiron_error');
+  }
+}
+

@@ -1,0 +1,12 @@
+; $Id$
+name = Visualizador de Estado de Entrega
+description = Modulo encargado de buscar y mostrar el estado de una Entrega.
+package = "Toxement"
+project = "Transportadoras"
+core = 7.x
+php = 5.6.4
+;dependencies:
+;  - field_collection
+;  - taxonomy
+;files[] = pages.module
+;files[] = pages.admin.inc
