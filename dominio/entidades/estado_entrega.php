@@ -1,20 +1,20 @@
 <?php
 
-    class ConsultaRemisionEntidad {
+    class EstadoEntrega {
 
         private $fechas;
-        private $activity_num;
-        private $tracks;
+        private $remision;
+        private $soportes;
 
         public function __construct(
             FechasConsultaRemision $fechas = null,
-            $activity_num = '',
-            $tracks = array()
+            $remision = '',
+            $soportes = array()
         )
         {
             $this->fechas = $fechas ? $fechas : new FechasConsultaRemision();
-            $this->activity_num = $activity_num;
-            $this->tracks = $tracks;
+            $this->remision = $remision;
+            $this->soportes = $soportes;
         }
 
         /**
@@ -35,36 +35,36 @@
         }
 
         /**
-         * Get the value of activity_num
+         * Get the value of remision
          */
-        public function getActivityNum()
+        public function getRemision()
         {
-                return $this->activity_num;
+                return $this->remision;
         }
 
         /**
-         * Set the value of activity_num
+         * Set the value of remision
          */
-        public function setActivityNum($activity_num)
+        public function setRemision($remision)
         {
-                $this->activity_num = $activity_num;
+                $this->remision = $remision;
                 return $this;
         }
 
         /**
-         * Get the value of tracks
+         * Get the value of soportes
          */
-        public function getTracks()
+        public function getSoportes()
         {
-                return $this->tracks;
+                return $this->soportes;
         }
 
         /**
-         * Set the value of tracks
+         * Set the value of soportes
          */
-        public function setTracks($tracks)
+        public function setSoportes($soportes)
         {
-                $this->tracks = $tracks;
+                $this->soportes = $soportes;
                 return $this;
         }
 

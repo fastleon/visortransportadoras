@@ -4,11 +4,9 @@
 /**
  * @file
  * Modulo para visualizar estado de remision de forma interna 
- * creado: Alejandro Leon - Norberto Villegas
+ * creado: Alejandro Leon 03/05/2024
  */
 
-  define ('VE_DEBUG_MODE', true); 
-  define ('VE_TIEMPO_RECARGA', 600); //segundos que guarda la ultima busqueda
 
  /** 
   * Implements hook_init() - Llamado de codigo antes de iniciar
@@ -44,14 +42,14 @@ function visorentregas_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
-  $items['visor/entrega/%'] = array(
-    'title' => 'Estado de Entrega',
-    'description' => 'Estado de Entrega - Toxement',
-    'page callback' => 'generador_webpage_visor_entrega',
-    'access arguments' => array('access content'),
-    'type' => MENU_NORMAL_ITEM,
-    'page arguments' => array(2),
-  );
+  // $items['visor/entrega/%'] = array(
+  //   'title' => 'Estado de Entrega',
+  //   'description' => 'Estado de Entrega - Toxement',
+  //   'page callback' => 'generador_webpage_visor_entrega',
+  //   'access arguments' => array('access content'),
+  //   'type' => MENU_NORMAL_ITEM,
+  //   'page arguments' => array(2),
+  // );
 
   return $items;
 
@@ -68,8 +66,8 @@ function visorentregas_menu() {
  */
 function generador_webpage_visor_buscador() {
 
-
   module_load_include('inc', 'visorentregas', 'presentacion/buscador_entregas');
+  // form_load_include('inc', 'visorentregas', 'presentacion/buscador_entregas_submit');
 
   $build = array(
       'formulario_buscador' => drupal_get_form('buscador_entregas_form'),
@@ -81,79 +79,34 @@ function generador_webpage_visor_buscador() {
   return $build;
 }
 
+
 /**
  * Callback para generar el reporte de cada viaje 
  * @param {integer} viaje_id
  */
-function generador_webpage_visor_entrega($entrega = NULL) {
+// function generador_webpage_visor_entrega($entrega = NULL) {
 
-  module_load_include('inc', 'visorentregas', 'presentacion/visor_entrega');
+//   module_load_include('inc', 'visorentregas', 'presentacion/visor_entrega');
 
-  //cargar datos del $viaje_id
-  //consultar_viaje_por_id($entrega);
-  //TODO hacer funcion que consulte el dato con el API
+//   //cargar datos del $viaje_id
+//   //consultar_viaje_por_id($entrega);
+//   // hacer funcion que consulte el dato con el API
   
-  $build = array(
-    '#markup' => '<div class="mi-clase-css">opcion seleccionado ' . $entrega . '</div>',
-  );
+//   $build = array(
+//     '#markup' => '<div class="mi-clase-css">opcion seleccionado ' . $entrega . '</div>',
+//   );
 
-  // $build = array(
-  //   'plantilla_viajes' => drupal_get_form('visor_entrega_render_form'),
-  // );
+//   // $build = array(
+//   //   'plantilla_viajes' => drupal_get_form('visor_entrega_render_form'),
+//   // );
 
-  //imprimir errores debug si esta habilitado
-  ve_mostrar_errores();
+//   //imprimir errores debug si esta habilitado
+//   ve_mostrar_errores();
 
-  return $build;
-}
-
-
-
+//   return $build;
+// }
 
 /* *
- * Callback para editar viajes, es llamado desde el formulario de reportes
- * /
-function generador_webpage_edicion() {
-  
-  //Revisar si existe la variable local de viajes
-  if ((!isset($_SESSION['visorentregas_data']['id'])) || ($_SESSION['visorentregas_data']['id'] == 'new')) {
-    drupal_set_message('Error cargando información a editar, creando nuevo viaje', 'error');
-    datos_en_blanco();
-    $url_redirect = 'viajes';
-    drupal_goto($url_redirect);
-  }
-
-  //Render de la pagina donde estan los formularios Iniciales
-  $build = array(
-      'formulario_viajes' => drupal_get_form('datos_viaje_formulario_form'),
-  );
-
-  //imprimir errores debug si esta habilitado
-  mostrar_errores();
-  
-  return $build;
-}
-
-
-/ **
- * Callback para generar el formulario de busquedas de CUMPLIDOS
- * /
-function generador_webpage_reporte_cumplidos() {
-
-  module_load_include('inc', 'visorentregas', 'presentation/reportes_cumplidos/visorentregas_reporte_cumplidos_render');
-  //render estructura de la pagina
-  $build = array(
-    'formulario_busqueda' => drupal_get_form('reporte_cumplidos_render_form'),
-  );
-  //imprimir errores debug si esta habilitado
-  mostrar_errores();
-
-  return $build;
-}
-
-
-
-/ **
  * Implementacion del hook permission para la administracion de roles
  * /
 function visorentregas_permission() {
