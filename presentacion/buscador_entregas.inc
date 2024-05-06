@@ -215,6 +215,9 @@ function buscador_imagenes($soportes) {
   $i = 0;
   $nombreImagenes = array();
   foreach ($soportes as $soporte) {
+    if (VE_PRODUCCION) {
+      $soporte= str_replace(VE_PRODUCCION_URL, VE_BASE_IMAGE_URL, $soporte);
+    }
     $imagenes['soportes']['imagenes_wrapper']['imagen'.$i++] = array(
       '#type' => 'image_button',
       '#src' => $soporte,
