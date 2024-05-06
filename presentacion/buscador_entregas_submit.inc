@@ -53,9 +53,9 @@ function buscador_entregas_form_validate($form, &$form_state) {
 function buscador_entregas_form_submit($form, &$form_state) {
 
   //Llamar dependencias
-  module_load_include('inc', 'visorentregas', 'presentacion\buscador_entregas');
-  module_load_include('php', 'visorentregas', 'infraestructura\datasource\remision_datasource_impl');
-  module_load_include('php', 'visorentregas', 'infraestructura\models\estado_entrega_dto');
+  module_load_include('inc', 'visorentregas', 'presentacion/buscador_entregas');
+  module_load_include('php', 'visorentregas', 'infraestructura/datasource/remision_datasource_impl');
+  module_load_include('php', 'visorentregas', 'infraestructura/models/estado_entrega_dto');
   
   $button_clicked = $form_state['triggering_element']['#name'];
   $remision = $form_state['values']['numSeguimiento'];

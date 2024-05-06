@@ -1,6 +1,6 @@
 <?php
 
-module_load_include('php', 'visorentregas', 'dominio\datasource\remision_datasource');
+module_load_include('php', 'visorentregas', 'dominio/datasource/remision_datasource');
 
 abstract class ServicioWebDrupal {
 

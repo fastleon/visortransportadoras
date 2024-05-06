@@ -44,7 +44,7 @@ class EstadoEntregaDTO {
     }
 
     public function toEntity() {
-        module_load_include('php', 'visorentregas', 'dominio\entidades\estado_entrega');
+        module_load_include('php', 'visorentregas', 'dominio/entidades/estado_entrega');
 
         $fechaProcesoLogistico = 'En proceso logístico';
         $fechaEntregaTransportadora = 'Entrega a transportadora';

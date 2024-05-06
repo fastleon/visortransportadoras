@@ -13,7 +13,7 @@
   */
 function visorentregas_init(){
   //llamar configuracion
-  module_load_include('php', 'visorentregas', 'config\parametros');
+  module_load_include('php', 'visorentregas', 'config/parametros');
   $_SESSION['visorentrega']['config'] = getParametros();
   return;
 }
