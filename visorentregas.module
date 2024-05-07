@@ -14,7 +14,6 @@
 function visorentregas_init(){
   //llamar configuracion
   module_load_include('php', 'visorentregas', 'config/parametros');
-  $_SESSION['visorentrega']['config'] = getParametros();
   return;
 }
 
@@ -38,18 +37,9 @@ function visorentregas_menu() {
     'title' => 'Buscador de Entregas',
     'description' => 'Buscador Drupal Entregas',
     'page callback' => 'generador_webpage_visor_buscador',
-    'access arguments' => array('access content'),          //('administrador modulo viajes'),
+    'access arguments' => array('usuario visorentrega'),    //hook permission
     'type' => MENU_NORMAL_ITEM,
   );
-
-  // $items['visor/entrega/%'] = array(
-  //   'title' => 'Estado de Entrega',
-  //   'description' => 'Estado de Entrega - Toxement',
-  //   'page callback' => 'generador_webpage_visor_entrega',
-  //   'access arguments' => array('access content'),
-  //   'type' => MENU_NORMAL_ITEM,
-  //   'page arguments' => array(2),
-  // );
 
   return $items;
 
@@ -104,24 +94,24 @@ function generador_webpage_visor_buscador() {
 //   ve_mostrar_errores();
 
 //   return $build;
-// }
+// } /*
 
-/* *
+/**
  * Implementacion del hook permission para la administracion de roles
- * /
+ */
 function visorentregas_permission() {
   $roles = array(
-    'administrador modulo viajes' => array(
-      'title' => t('Administrador del Modulo Viajes'),
-      'description' => t('Puede generar nuevos viajes y visualizar los reportes'),
+    'usuario visorentrega' => array(
+      'title' => t('Usuario para ver este modulo (visorentrega)'),
+      'description' => t('Puede buscar y visualizar el estado de las remisiones'),
     ),
-    'usuario modulo viajes' => array(
-      'title' => t('Usuario basico Modulo Viajes'),
-      'description' => t('Puede visualizar los reportes de los viajes'),
-    ),
+    // 'usuario modulo viajes' => array(
+    //   'title' => t('Usuario basico Modulo Viajes'),
+    //   'description' => t('Puede visualizar los reportes de los viajes'),
+    // ),
   );
   return $roles;
-}*/
+}
 
 /**
  * Funcion para depuracion de datos o errores dentro de las funciones callback (DEBUG)

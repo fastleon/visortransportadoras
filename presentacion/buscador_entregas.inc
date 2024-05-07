@@ -1,8 +1,6 @@
 <?php
 
 function buscador_entregas_form($form, &$form_state) {
-  // form_load_include('inc', 'visorentregas', 'presentacion/buscador_entregas');
-  
   //Llamar CSS
   drupal_add_css(drupal_get_path('module', 'visorentregas') . '/presentacion/css/style_seguimiento.css');
   //Llamar dependencias
@@ -12,7 +10,7 @@ function buscador_entregas_form($form, &$form_state) {
   module_load_include('php', 'visorentregas', 'infraestructura/models/estado_entrega_dto');
   
   $ubicacion_modulo = base_path() . drupal_get_path('module', 'visorentregas');
-  $config = $_SESSION['visorentrega']['config'];
+  //$config = $_SESSION['visorentrega']['config'];
   $estado_entrega = new EstadoEntrega();
 
   //REVISAR SI YA SE HIZO UNA CONSULTA Y SI ESTA NO LLEVA MAS DEL TIEMPO PROGRAMADO
@@ -216,7 +214,9 @@ function buscador_imagenes($soportes) {
   $nombreImagenes = array();
   foreach ($soportes as $soporte) {
     if (VE_PRODUCCION) {
+      // ve_add_error($soporte, 'entrando en modo produccion, reemplazando urls');
       $soporte= str_replace(VE_PRODUCCION_URL, VE_BASE_IMAGE_URL, $soporte);
+      // ve_add_error($soporte, 'saliendo en modo produccion, reemplazando urls');
     }
     $imagenes['soportes']['imagenes_wrapper']['imagen'.$i++] = array(
       '#type' => 'image_button',
