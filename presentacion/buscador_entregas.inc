@@ -214,9 +214,7 @@ function buscador_imagenes($soportes) {
   $nombreImagenes = array();
   foreach ($soportes as $soporte) {
     if (VE_PRODUCCION) {
-      // ve_add_error($soporte, 'entrando en modo produccion, reemplazando urls');
-      $soporte= str_replace(VE_PRODUCCION_URL, VE_BASE_IMAGE_URL, $soporte);
-      // ve_add_error($soporte, 'saliendo en modo produccion, reemplazando urls');
+      $soporte = VE_BASE_IMAGE_URL.'/'.$soporte;
     }
     $imagenes['soportes']['imagenes_wrapper']['imagen'.$i++] = array(
       '#type' => 'image_button',
