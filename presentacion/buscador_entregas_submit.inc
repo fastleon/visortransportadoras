@@ -1,21 +1,5 @@
 <?php
 
-// function cambiar_imagen_callback($form, $form_state) {
-  
-//   // Obtener el valor seleccionado del campo de selección
-//   $selected_image = $form_state['values']['select_image'];
-//   ve_add_error($selected_image,'imagen seleccionada');
-
-//   $image_markup = array(
-//     '#prefix' => '<div id="imagen-container">',
-//     '#suffix' => '</div>',
-//     '#markup' => '<img src="' . $selected_image . '" alt="Imagen predeterminada">',
-//   );
-
-//   return $image_markup;
-
-// }
-
 function agrandar_imagen_callback($form, $form_state) {
   
   // Obtener el valor seleccionado del campo de selección
@@ -30,13 +14,6 @@ function agrandar_imagen_callback($form, $form_state) {
   return $image_markup;
 
 }
-
-
-
-// function buscador_entregas_form_reset($form, &$form_state) {
-//   $form_state['rebuild'] = FALSE;
-// }
-
 
 
 function buscador_entregas_form_validate($form, &$form_state) {

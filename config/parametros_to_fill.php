@@ -7,4 +7,5 @@
 // define ('VE_PRODUCCION', false);     // ambiente producción?
 // define ('VE_TIEMPO_RECARGA', 60);   //segundos que guarda la ultima busqueda
 // define ('VE_BASE_IMAGE_URL', '');       //URL desde donde llamar las imagenes
+// define ('VE_LOCAL_IMAGE_URL', '')       //URL al hacer pruebas en servidor local
 // define ('VE_PRODUCCION_URL', '');       //URL del dominio

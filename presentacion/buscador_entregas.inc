@@ -48,12 +48,13 @@ function buscador_entregas_form($form, &$form_state) {
     $form['visor_resultados']['informacion'] = buscador_resultados($ubicacion_modulo, $estado_entrega);
   }
 
+  //soportes (imagenes y pdfs)
   if ( !empty($estado_entrega->getSoportes()) ) {
-    $form['visor_resultados']['soportes'] = buscador_imagenes($estado_entrega->getSoportes())['soportes'];
+    $form['visor_resultados']['soportes'] = buscador_imagenes($ubicacion_modulo, $estado_entrega->getSoportes())['soportes'];
   } else if ( !empty($estado_entrega->getRemision()) ) {
     $form['visor_resultados']['soportes'] = buscador_sin_soportes()['soportes'];
   }
-
+  
   return $form;
 
 }
@@ -197,7 +198,7 @@ HTML;
 
 }
 
-function buscador_imagenes($soportes) {
+function buscador_imagenes($ubicacion_modulo, $soportes) {
 
   $imagenes['soportes']['label'] = array(
     '#prefix' => '<div class="back-verde-deg" id="soportes-label">',
@@ -211,39 +212,55 @@ function buscador_imagenes($soportes) {
   );
 
   $i = 0;
-  $nombreImagenes = array();
+  // $nombreImagenes = array();
   foreach ($soportes as $soporte) {
     if (VE_PRODUCCION) {
       $soporte = VE_BASE_IMAGE_URL.'/'.$soporte;
+    } else {
+      $soporte = VE_LOCAL_IMAGE_URL.'/'.pathinfo($soporte)['basename'];
     }
+    $extension = strtolower(pathinfo($soporte)['extension']);
+    $pdf_image = $ubicacion_modulo . '/presentacion/img/pdf.png';
+    $tif_image = $ubicacion_modulo . '/presentacion/img/tif.png';
+    $otro_image = $ubicacion_modulo . '/presentacion/img/otro.png';
+    
+    if ($extension == 'pdf') {                            //PDF
+      $imagenes['soportes']['imagenes_wrapper']['imagen'.$i++] = array(
+        '#markup' => '<a href='.$soporte.' target="_blank"><img src="'.$pdf_image.'" class="imagen-miniatura" alt="Archivo PDF"></a>',
+      );
+      continue;
+    }
+    if ($extension == 'tif' || $extension == 'tiff') {    //TIF o TIFF
+      $imagenes['soportes']['imagenes_wrapper']['imagen'.$i++] = array(
+        '#markup' => '<a href='.$soporte.' target="_blank"><img src="'.$tif_image.'" class="imagen-miniatura" alt="Archivo TIF"></a>',
+      );
+      continue;
+    }
+    //                                                    NO ES IMAGEN
+    if (!($extension == 'jpg' || $extension == 'jpeg' || $extension == 'bmp' || $extension == 'png' || $extension == 'gif')) {
+      $imagenes['soportes']['imagenes_wrapper']['imagen'.$i++] = array(
+        '#markup' => '<a href='.$soporte.' target="_blank"><img src="'.$otro_image.'" class="imagen-miniatura" alt="Desconocido"></a>',
+      );
+      continue;
+    }
+    //formatos de imagenes soportadas por navegador
     $imagenes['soportes']['imagenes_wrapper']['imagen'.$i++] = array(
       '#type' => 'image_button',
       '#src' => $soporte,
       '#name' => 'imagen'.$i,
+      '#attributes' => array(
+        'class' => array('imagen-miniatura'),
+      ),
       '#ajax' => array(
         'callback' => 'agrandar_imagen_callback',
         'wrapper' => 'imagen-container',
         'params' => array(
           'urlImage' => $soporte,
-        ),
-      ),
-      '#attributes' => array(
-        'class' => array('imagen-miniatura'),
-      ),
+        )
+      )
     );
-    $nombreImagenes[] = array($soporte => basename($soporte));
+      // $nombreImagenes[] = array($soporte => basename($soporte));
   }
-
-  // $imagenes['soportes']['imagenes_wrapper']['select_image'] = array(
-  //   '#type' => 'select',
-  //   '#title' => 'Seleccione una imagen',
-  //   '#options' => $nombreImagenes,
-  //   '#element_validate' => array(),
-  //   '#ajax' => array(
-  //     'callback' => 'cambiar_imagen_callback',
-  //     'wrapper' => 'imagen-container',
-  //   ),
-  // );
   
   $imagenes['soportes']['imagen-completa'] = array(
     '#prefix' => '<div id="imagen-container">',
@@ -253,7 +270,6 @@ function buscador_imagenes($soportes) {
 
   return $imagenes;
 }
-
 
 function buscador_sin_soportes() {
 
