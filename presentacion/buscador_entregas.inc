@@ -1,6 +1,7 @@
 <?php
 
 function buscador_entregas_form($form, &$form_state) {
+
   //Llamar CSS
   drupal_add_css(drupal_get_path('module', 'visorentregas') . '/presentacion/css/style_seguimiento.css');
   //Llamar dependencias
@@ -214,8 +215,9 @@ function buscador_imagenes($ubicacion_modulo, $soportes) {
   $i = 0;
   // $nombreImagenes = array();
   foreach ($soportes as $soporte) {
+    $soporte=str_replace('localhost/clientes/clientes/var/www/html/clientes/clientes/sites/default/files/clientes', VE_ARCHIVOS_ANEXOS_URL, $soporte);
     if (VE_PRODUCCION) {
-      $soporte = VE_BASE_IMAGE_URL.'/'.$soporte;
+      //$soporte = VE_BASE_IMAGE_URL.'/'.$soporte;
     } else {
       $soporte = VE_LOCAL_IMAGE_URL.'/'.pathinfo($soporte)['basename'];
     }
@@ -249,7 +251,7 @@ function buscador_imagenes($ubicacion_modulo, $soportes) {
       '#src' => $soporte,
       '#name' => 'imagen'.$i,
       '#attributes' => array(
-        'class' => array('imagen-miniatura'),
+        'class' => array('imagen-miniatura', 'ajax-image-button'),
       ),
       '#ajax' => array(
         'callback' => 'agrandar_imagen_callback',
@@ -276,7 +278,7 @@ function buscador_sin_soportes() {
   $imagenes['soportes']['label'] = array(
     '#prefix' => '<div class="back-gray-deg" id="soportes-label">',
     '#suffix' => '</div>',
-    '#markup' => 'Entrega sin sopportes en el sistema',
+    '#markup' => 'Entrega sin soportes en el sistema',
   );
 
   return $imagenes;

@@ -12,11 +12,17 @@
  /** 
   * Implements hook_init() - Llamado de codigo antes de iniciar
   */
-function visorentregas_init(){
+function visorentregas_init() {
   //llamar configuracion
   module_load_include('php', 'visorentregas', 'config/parametros');
+  
+  //modificación ajax
+  ve_add_error('init');
+  drupal_add_js(drupal_get_path('module', 'visorentregas') . '/presentacion/js/custom_ajax.js');
+
   return;
 }
+
 
 
 /**

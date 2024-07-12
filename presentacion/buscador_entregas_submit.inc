@@ -4,13 +4,11 @@ function agrandar_imagen_callback($form, $form_state) {
   
   // Obtener el valor seleccionado del campo de selección
   $selected_image = $form_state['triggering_element']['#ajax']['params']['urlImage'];
-
   $image_markup = array(
     '#prefix' => '<div class="imagen-completa" id="imagen-container">',
     '#suffix' => '</div>',
     '#markup' => '<a href="'. $selected_image .'" target="_blank"><img src="' . $selected_image . '"></a>',
   );
-
   return $image_markup;
 
 }
