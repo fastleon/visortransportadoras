@@ -225,6 +225,7 @@ function buscador_imagenes($ubicacion_modulo, $soportes) {
     $pdf_image = $ubicacion_modulo . '/presentacion/img/pdf.png';
     $tif_image = $ubicacion_modulo . '/presentacion/img/tif.png';
     $otro_image = $ubicacion_modulo . '/presentacion/img/otro.png';
+    $jpg_image = $ubicacion_modulo . '/presentacion/img/jpg.png';
     
     if ($extension == 'pdf') {                            //PDF
       $imagenes['soportes']['imagenes_wrapper']['imagen'.$i++] = array(
@@ -245,11 +246,11 @@ function buscador_imagenes($ubicacion_modulo, $soportes) {
       );
       continue;
     }
-    //formatos de imagenes soportadas por navegador
+    //"ELSE"                                           IMAGENES SOPORTADAS
     $imagenes['soportes']['imagenes_wrapper']['imagen'.$i++] = array(
       '#type' => 'image_button',
-      '#src' => $soporte,
-      '#name' => 'imagen'.$i,
+      '#src' => $jpg_image,
+      '#name' => 'imagen_'.$i,
       '#attributes' => array(
         'class' => array('imagen-miniatura', 'ajax-image-button'),
       ),
